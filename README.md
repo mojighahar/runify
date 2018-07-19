@@ -14,6 +14,7 @@ pm2 start ./bin/www
 ```
 ## Notice
 this app hasn't any authentication now
+
 use it behind a proxy with authentication or ip limited access
 
 ## Todo

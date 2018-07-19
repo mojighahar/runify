@@ -1,4 +1,4 @@
-var ws = new WebSocket('ws://127.0.0.1:65301')
+var ws = new WebSocket('ws://' + location.hostname + ':65301')
 
 $(document).ready(function () {
   $('.delete-btn').click(function () {
@@ -88,3 +88,9 @@ $(document).ready(function () {
   $('#logModal').modal();
   $('#addModal').modal();
 });
+
+function checkSocket() {
+  if(ws.readyState != WebSocket.OPEN) {
+    ws = new WebSocket('ws://' + location.hostname + ':65301')
+  }
+}

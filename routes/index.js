@@ -2,10 +2,11 @@ var express = require('express')
 var router = express.Router()
 var App = require('../components/app')
 var Backup = require('../components/backup')
+require('dotenv').config()
 
 var apps = Backup.load()
 var SocketHandler = require('../components/socketHandler')
-new SocketHandler(65301, apps)
+new SocketHandler(process.env.SOCKET_PORT || 65301, apps)
 
 router.get('/', function(req, res, next) {
   res.render('index', { apps: apps });
