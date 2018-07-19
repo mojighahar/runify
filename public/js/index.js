@@ -75,6 +75,7 @@ $(document).ready(function () {
       name: $('#app_name').val(),
       args: $('#app_args').val().split(' '),
       path: $('#app_path').val(),
+      dir: $('#app_dir').val(),
       keepUp: $('#app_keepup').prop('checked'),
     }, function(result){
       if(result.success) {

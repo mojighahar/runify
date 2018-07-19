@@ -30,7 +30,7 @@ router.post('/delete', function(req, res, next) {
 })
 
 router.post('/add-app', function(req, res, next) {
-  var index = apps.push(new App(req.body.path, req.body.args, req.body.keepUp, req.body.name)) - 1
+  var index = apps.push(new App(req.body.path, req.body.args, req.body.keepUp, req.body.name, null, req.body.dir)) - 1
   apps[index].index = index
   Backup.save(apps)
   res.json({ success: true })

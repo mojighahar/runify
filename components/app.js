@@ -4,9 +4,10 @@ const fs = require('fs')
 const WS = require('ws')
 
 class App {
-  constructor(path, args, keepUp, name, logPath) {
+  constructor(path, args, keepUp, name, logPath, dir) {
     this.path = path
     this.args = args
+    this.dir = dir || '/'
     this.keepUp = keepUp || false
     this.name = name || Path.basename(this.path)
     this.logPath = logPath || this.getDefaultLogPath()
@@ -19,7 +20,7 @@ class App {
   start() {
     if (this.status == 'running')
       return
-    this.process = spawn(this.path, this.args)
+    this.process = spawn(this.path, this.args, {cwd: this.dir})
     this.attachEvents()
     this.status = 'running'
     this.stopped = false
