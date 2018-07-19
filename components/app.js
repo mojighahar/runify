@@ -4,10 +4,11 @@ const fs = require('fs')
 const WS = require('ws')
 
 class App {
-  constructor(path, args, keepUp, name, logPath, dir) {
+  constructor(path, args, keepUp, name, logPath, dir, env) {
     this.path = path
     this.args = args
     this.dir = dir || '/'
+    this.env = env || {}
     this.keepUp = keepUp || false
     this.name = name || Path.basename(this.path)
     this.logPath = logPath || this.getDefaultLogPath()
@@ -20,7 +21,10 @@ class App {
   start() {
     if (this.status == 'running')
       return
-    this.process = spawn(this.path, this.args, {cwd: this.dir})
+    this.process = spawn(this.path, this.args, {
+      cwd: this.dir,
+      env: this.env
+    })
     this.attachEvents()
     this.status = 'running'
     this.stopped = false
@@ -84,7 +88,7 @@ class App {
   }
 
   static fromObject(object) {
-    return new App(object.path, object.args, object.keepUp, object.name, object.logPath)
+    return new App(object.path, object.args, object.keepUp, object.name, object.logPath, object.dir, object.env)
   }
 
   toObject() {
@@ -93,7 +97,9 @@ class App {
       args: this.args,
       keepUp: this.keepUp,
       name: this.name,
-      logPath: this.logPath
+      logPath: this.logPath,
+      dir: this.dir,
+      env: this.env
     }
   }
 

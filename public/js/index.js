@@ -76,6 +76,7 @@ $(document).ready(function () {
       args: $('#app_args').val().split(' '),
       path: $('#app_path').val(),
       dir: $('#app_dir').val(),
+      env: JSON.parse($('#app_env').val()),
       keepUp: $('#app_keepup').prop('checked'),
     }, function(result){
       if(result.success) {
