@@ -1,0 +1,60 @@
+extends layout
+
+block content
+  div(class="card")
+    div(class="card-content")
+      table(class="highlighted")
+        thead
+          th= 'Name'
+          th= 'Command'
+          th(width="150px")= 'Status'
+          th(width="200px")= 'Actions'
+        tbody
+          each app, index in apps
+            tr(index= index)
+              th= app.name
+              th= (app.path + ' ' + app.args.join(' '))
+              th= app.status
+              th
+                if(app.status == 'running')
+                  button(class="stop-btn waves-effect waves-red btn-flat red-text", href="/stop/"+index)
+                    i(class="material-icons")= 'stop'
+                else
+                  button(class="start-btn waves-effect waves-teal btn-flat teal-text", href="/start/"+index)
+                    i(class="material-icons")= 'play_arrow'
+                button(class="log-btn waves-effect waves-teal btn-flat")
+                  i(class="material-icons")= 'format_align_left'
+                button(class="delete-btn waves-effect waves-red btn-flat red-text")
+                  i(class="material-icons")= 'delete'
+  div(id="logModal", class="modal modal-fixed-footer")
+    div(class="modal-content")
+      input(id="logIndex", type="hidden")
+      pre(id="logBox")
+    div(class="modal-footer")
+      a(href="#!", class="close-log waves-effect waves-green btn-flat")= 'Close'
+  div(id="addModal", class="modal modal-fixed-footer")
+    div(class="modal-content")
+      div(class="row")
+        div(class="input-field col s4")
+          input(placeholder="App Name", id="app_name", type="text")
+          label(for="app_name")= 'App Name'
+        div(class="input-field col s4")
+          input(placeholder="App Path", id="app_path", type="text")
+          label(for="app_path")= 'App Path'
+        div(class="input-field col s4")
+          input(placeholder="App Args", id="app_args", type="text")
+          label(for="app_args")= 'App Args'
+        div(class="col s4")
+          label
+            input(id="app_keepup", type="checkbox", checked="checked")
+            span= 'KeepUp'
+
+    div(class="modal-footer")
+      a(href="#!", class="add-app-submit waves-effect waves-green btn-flat")= 'Add'
+  
+  div(class="fixed-action-btn")
+    a(class="add-app btn-floating btn-large red")
+      i(class="large material-icons")= 'add'
+
+block script
+  script(src="/js/index.js")
