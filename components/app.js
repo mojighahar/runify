@@ -9,6 +9,7 @@ class App {
     this.args = args
     this.dir = dir || '/'
     this.env = env || {}
+    this.env.PATH = process.env.PATH
     this.keepUp = keepUp || false
     this.name = name || Path.basename(this.path)
     this.logPath = logPath || this.getDefaultLogPath()
