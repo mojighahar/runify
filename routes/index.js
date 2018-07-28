@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 })
 
 router.post('/start', function(req, res, next) {
-  apps[req.body.index].start()
+  apps[req.body.index].start(true)
   res.json({success: true })
 })
 

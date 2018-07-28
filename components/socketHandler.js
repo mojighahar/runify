@@ -23,10 +23,11 @@ class SocketHandler {
       var request = JSON.parse(message)
       switch (request.action) {
         case 'attach':
+          console.log('attach request from client: ' + client.index)
           this.apps[request.index].addListener(client)
           break
         case 'deattach':
-        this.apps[request.index].removeListener(client)
+          this.apps[request.index].removeListener(client)
           break
       }
     })

@@ -41,6 +41,7 @@ $(document).ready(function () {
     $('#logModal').modal('open');
     var index = $(this).closest('tr').attr('index')
     $('#logIndex').val(index)
+    checkSocket()
     ws.send(JSON.stringify({
       action: 'attach',
       index: index
@@ -59,6 +60,7 @@ $(document).ready(function () {
 
   $('.close-log').click(function () {
     var index = $('#logIndex').val()
+    checkSocket()
     ws.send(JSON.stringify({
       action: 'deattach',
       index: index

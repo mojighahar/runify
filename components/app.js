@@ -2,6 +2,7 @@ const { spawn } = require('child_process')
 const Path = require('path')
 const fs = require('fs')
 const WS = require('ws')
+require('dotenv').config()
 
 class App {
   constructor(path, args, keepUp, name, logPath, dir, env) {
@@ -17,11 +18,15 @@ class App {
     this.stopped = false
     this.meta = {}
     this.listeners = []
+    this.tries = 0
   }
 
-  start() {
+  start(fromUser = false) {
     if (this.status == 'running')
       return
+    if(fromUser) {
+      this.tries = 0
+    }
     this.process = spawn(this.path, this.args, {
       cwd: this.dir,
       env: this.env
@@ -46,7 +51,8 @@ class App {
       this.status = 'exited'
       this.meta.exitCode = code
       this.meta.signal = signal
-      if (this.keepUp && !this.stopped) {
+      if (this.keepUp && !this.stopped && (this.tries < process.env.MAX_TRIES)) {
+        this.tries++;
         this.start();
       }
     })
@@ -81,6 +87,7 @@ class App {
       success: true,
       last: last
     }))
+    console.log("Client Handeled")
     return this.listeners.push(client)
   }
 
